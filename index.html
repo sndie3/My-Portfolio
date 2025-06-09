@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio</title>
+  <link rel="stylesheet" href="css/style.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+</head>
+<body>
+  <div class="background-animation">
+    <div class="floating-shapes">
+      <div class="shape"></div>
+      <div class="shape"></div>
+      <div class="shape"></div>
+      <div class="shape"></div>
+    </div>
+    <div class="mouse-parallax">
+      <div class="parallax-element"></div>
+    </div>
+  </div>
+
+  <nav class="navbar">
+    <div class="container">
+      <a class="navbar-brand" href="#">SG</a>
+      <button class="nav-toggle" aria-label="Toggle navigation">
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="navbar-nav">
+        <a class="nav-link" href="#projects">Projects</a>
+        <a class="nav-link" href="#about">About</a>
+        <a class="nav-link" href="#resume">Resume</a>
+        <a class="nav-link" href="#contact">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <div include-html="sections/hero.html"></div>
+  <div include-html="sections/projects.html"></div>
+  <div include-html="sections/about.html"></div>
+  <div include-html="sections/resume.html"></div>
+  <div include-html="sections/certificates.html"></div>
+  <div include-html="sections/contact.html"></div>
+  <div include-html="sections/footer.html"></div>
+
+  <script>
+  // Simple HTML include system
+  document.addEventListener('DOMContentLoaded', async function() {
+    const includeElements = document.querySelectorAll('[include-html]');
+    const loadPromises = Array.from(includeElements).map(async (el) => {
+      const file = el.getAttribute('include-html');
+      if (file) {
+        const resp = await fetch(file);
+        if (resp.ok) {
+          el.innerHTML = await resp.text();
+        } else {
+          el.innerHTML = "Section not found.";
+        }
+      }
+    });
+    await Promise.all(loadPromises);
+
+    // Call all initialization functions after all HTML content is loaded
+    if (typeof initializeNavigation === 'function') initializeNavigation();
+    if (typeof initializeScrollEffects === 'function') initializeScrollEffects();
+    if (typeof initializeTypingEffect === 'function') initializeTypingEffect();
+    if (typeof initializeProjectFilters === 'function') initializeProjectFilters();
+    if (typeof initializeContactForm === 'function') initializeContactForm();
+    if (typeof initializeCertificateModal === 'function') initializeCertificateModal();
+  });
+  </script>
+  <!-- Add EmailJS SDK globally to ensure it loads before main.js -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script src="js/main.min.js"></script>
+</body>
+</html>
