@@ -44,7 +44,6 @@
   <div include-html="sections/footer.html"></div>
 
   <script>
-  // Simple HTML include system
   document.addEventListener('DOMContentLoaded', async function() {
     const includeElements = document.querySelectorAll('[include-html]');
     const loadPromises = Array.from(includeElements).map(async (el) => {
@@ -60,7 +59,6 @@
     });
     await Promise.all(loadPromises);
 
-    // Call all initialization functions after all HTML content is loaded
     if (typeof initializeNavigation === 'function') initializeNavigation();
     if (typeof initializeScrollEffects === 'function') initializeScrollEffects();
     if (typeof initializeTypingEffect === 'function') initializeTypingEffect();
@@ -69,7 +67,6 @@
     if (typeof initializeCertificateModal === 'function') initializeCertificateModal();
   });
   </script>
-  <!-- Add EmailJS SDK globally to ensure it loads before main.js -->
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
   <script src="js/main.min.js"></script>
 </body>
